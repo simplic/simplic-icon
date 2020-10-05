@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Simplic.Icon
 {
     /// <summary>
-    /// Responsible for Icon Management    
+    /// Responsible for Icon Management     
     /// </summary>
     public interface IIconService
     {
