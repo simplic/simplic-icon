@@ -83,6 +83,9 @@
     <PackageReference Include="Simplic.CoreLib">
       <Version>6.17.20.322</Version>
     </PackageReference>
+    <PackageReference Include="Simplic.Framework.Base">
+      <Version>7.2.220.329</Version>
+    </PackageReference>
     <PackageReference Include="Simplic.Framework.SqlD">
       <Version>7.2.220.329</Version>
     </PackageReference>
