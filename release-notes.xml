@@ -1,2 +1,5 @@
 <ReleaseNotes>
+	<ChangeSet>
+		<Change type="enhancement">Moved Icon.Service and Icon.UI from simplic framework to simplic icon repository. </Change>
+	</ChangeSet>
 </ReleaseNotes>
