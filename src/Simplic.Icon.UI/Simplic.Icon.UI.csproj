@@ -89,9 +89,6 @@
     <PackageReference Include="Simplic.Framework.SqlD">
       <Version>7.2.220.329</Version>
     </PackageReference>
-    <PackageReference Include="Simplic.Icon">
-      <Version>6.0.18.620</Version>
-    </PackageReference>
     <PackageReference Include="Simplic.Sql">
       <Version>6.3.20.322</Version>
     </PackageReference>
@@ -116,6 +113,12 @@
     <PackageReference Include="Telerik.Windows.Data.for.Wpf.Xaml">
       <Version>2020.1.218</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simplic.Icon\Simplic.Icon.csproj">
+      <Project>{e34637aa-911d-4501-9af8-bf63b9bed29d}</Project>
+      <Name>Simplic.Icon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
