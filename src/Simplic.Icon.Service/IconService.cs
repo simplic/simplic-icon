@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using Simplic.Configuration;
+using System.Security.AccessControl;
 
 namespace Simplic.Icon.Service
 {
@@ -31,10 +32,13 @@ namespace Simplic.Icon.Service
         #endregion
 
         #region Constructor
-        public IconService()
+        public IconService(ISqlService sqlService, IConfigurationService configurationService)
         {
             if (Directory.Exists(IconFolderPath) == false)
                 Directory.CreateDirectory(IconFolderPath);
+
+            this.configurationService = configurationService;
+            this.sqlService = sqlService;
         }
         #endregion
 
