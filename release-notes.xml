@@ -1,5 +1,8 @@
 <ReleaseNotes>
 	<ChangeSet>
-		<Change type="enhancement">Moved Icon.Service and Icon.UI from simplic framework to simplic icon repository. </Change>
+		<Change type="enhancement">Moved Icon.Service and Icon.UI from simplic framework to simplic icon repository.</Change>
 	</ChangeSet>
+  <ChangeSet>
+    <Change type="bug">Add icon cache.</Change>
+  </ChangeSet>
 </ReleaseNotes>
