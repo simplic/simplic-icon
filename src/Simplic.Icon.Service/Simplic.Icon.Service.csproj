@@ -45,6 +45,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IconCache.cs" />
     <Compile Include="IconService.cs" />
     <Compile Include="IconWinApiHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,12 +72,15 @@
     <PackageReference Include="Simplic.CoreLib">
       <Version>6.17.20.322</Version>
     </PackageReference>
-    <PackageReference Include="Simplic.Icon">
-      <Version>6.0.18.620</Version>
-    </PackageReference>
     <PackageReference Include="Simplic.Sql">
       <Version>6.3.20.322</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simplic.Icon\Simplic.Icon.csproj">
+      <Project>{e34637aa-911d-4501-9af8-bf63b9bed29d}</Project>
+      <Name>Simplic.Icon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
