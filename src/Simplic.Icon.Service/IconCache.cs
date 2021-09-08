@@ -17,7 +17,10 @@ namespace Simplic.Icon.Service
         /// </summary>
         public const string CacheKey = "IconCache";
 
-        public string Key => throw new NotImplementedException();
+        /// <summary>
+        /// Gets the current cache key (<see cref="CacheKey"/>
+        /// </summary>
+        public string Key => CacheKey;
 
         /// <summary>
         /// Gets or sets a list of cached icons

@@ -5,4 +5,7 @@
   <ChangeSet guid="12c37ed0-70a8-4689-a72b-0160529559cd">
     <Change type="bug">Add icon cache.</Change>
   </ChangeSet>
+  <ChangeSet>
+    <Change type="feature">Upgrade from SAP Sybase Sql Anywhere 12 to SAP Sybase Sql Anywhere 17.</Change>
+  </ChangeSet>
 </ReleaseNotes>
