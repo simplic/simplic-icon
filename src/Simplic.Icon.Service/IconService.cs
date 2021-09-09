@@ -1,5 +1,5 @@
-﻿using Dapper;
-using iAnywhere.Data.SQLAnywhere;
+using Dapper;
+using Sap.Data.SQLAnywhere;
 using Simplic.Base;
 using Simplic.Cache;
 using Simplic.Sql;
