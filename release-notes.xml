@@ -9,6 +9,6 @@
     <Change type="feature">Upgrade from SAP Sybase Sql Anywhere 12 to SAP Sybase Sql Anywhere 17.</Change>
   </ChangeSet>
   <ChangeSet>
-    <Change type="bug">Fix bug where icon selection by double click in icon editor window wasnt functional and save changes dialog was shown unintentionally.</Change>
+    <Change type="bug">Fixes a bug where icon selection by double-clicking in icon editor window wasn't functional and save changes dialog was shown unintentionally.</Change>
   </ChangeSet>
 </ReleaseNotes>
