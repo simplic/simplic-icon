@@ -71,6 +71,7 @@ namespace Simplic.Icon.UI
         {
             if (SelectedIcon != null)
             {
+                this.WindowMode = WindowMode.View;
                 this.DialogResult = true;
                 this.Close();
             }
