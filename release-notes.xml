@@ -8,7 +8,7 @@
   <ChangeSet guid="c732216f-5eff-4bbe-ac8c-b7c4cffc86a3">
     <Change type="feature">Upgrade from SAP Sybase Sql Anywhere 12 to SAP Sybase Sql Anywhere 17.</Change>
   </ChangeSet>
-  <ChangeSet>
+  <ChangeSet guid="6a3cb506-fcbf-4f70-aa36-8b75164446ff">
     <Change type="bug">Fixes a bug where icon selection by double-clicking in icon editor window wasn't functional and save changes dialog was shown unintentionally.</Change>
   </ChangeSet>
 </ReleaseNotes>
