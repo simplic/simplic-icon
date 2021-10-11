@@ -1,11 +1,14 @@
 <ReleaseNotes>
-	<ChangeSet guid="2eed2a70-09e7-4e4b-b53a-f694ea53d97a">
-		<Change type="enhancement">Moved Icon.Service and Icon.UI from simplic framework to simplic icon repository.</Change>
-	</ChangeSet>
+  <ChangeSet guid="2eed2a70-09e7-4e4b-b53a-f694ea53d97a">
+    <Change type="enhancement">Moved Icon.Service and Icon.UI from simplic framework to simplic icon repository.</Change>
+  </ChangeSet>
   <ChangeSet guid="12c37ed0-70a8-4689-a72b-0160529559cd">
     <Change type="bug">Add icon cache.</Change>
   </ChangeSet>
   <ChangeSet guid="c732216f-5eff-4bbe-ac8c-b7c4cffc86a3">
     <Change type="feature">Upgrade from SAP Sybase Sql Anywhere 12 to SAP Sybase Sql Anywhere 17.</Change>
+  </ChangeSet>
+  <ChangeSet>
+    <Change type="bug">Fixes a bug where icon selection by double-clicking in icon editor window wasn't functional and save changes dialog was shown unintentionally.</Change>
   </ChangeSet>
 </ReleaseNotes>
