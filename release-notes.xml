@@ -11,4 +11,7 @@
   <ChangeSet guid="6a3cb506-fcbf-4f70-aa36-8b75164446ff">
     <Change type="bug">Fixes a bug where icon selection by double-clicking in icon editor window wasn't functional and save changes dialog was shown unintentionally.</Change>
   </ChangeSet>
+  <ChangeSet>
+    <Change type="bug">Icon Service now only saves icons to the data base, when the name does not already exists. Fixes "column 'name' not unique" errors.</Change>
+  </ChangeSet>
 </ReleaseNotes>

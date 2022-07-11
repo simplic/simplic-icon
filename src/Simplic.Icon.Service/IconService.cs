@@ -445,14 +445,19 @@ namespace Simplic.Icon.Service
         /// <returns>true if successful</returns>
         public bool Save(Icon icon)
         {
-            return sqlService.OpenConnection((connection) =>
+            if(!CheckIfNameExists(icon.Name))
             {
-                //TODO: CreateAt -> CreateDateTimeeTime
-                var affectedRows = connection.Execute($"INSERT INTO {TableName} (Guid, Name, Icon, CreateDateTime, UpdateDateTime) "
-                     + " ON EXISTING UPDATE VALUES (:Guid, :Name, :IconBlob, :CreateDateTime, :UpdateDateTime)", icon);
+                return sqlService.OpenConnection((connection) =>
+                {
+                    //TODO: CreateAt -> CreateDateTimeeTime
+                    var affectedRows = connection.Execute($"INSERT INTO {TableName} (Guid, Name, Icon, CreateDateTime, UpdateDateTime) "
+                         + " ON EXISTING UPDATE VALUES (:Guid, :Name, :IconBlob, :CreateDateTime, :UpdateDateTime)", icon);
 
-                return affectedRows > 0;
-            });
+                    return affectedRows > 0;
+                });
+            }
+
+            return false;
         }
         #endregion
 
@@ -549,6 +554,22 @@ namespace Simplic.Icon.Service
             }
 
             return false;
+        }
+        #endregion
+
+        #region [CheckIfNameExists]
+        /// <summary>
+        /// Checks in the data base whether the given name exists.
+        /// </summary>
+        /// <returns>True if the name exists.</returns>
+        public bool CheckIfNameExists(string name)
+        {
+            var val = sqlService.OpenConnection((connection) =>
+            {
+                return connection.Query<List<int>>($"SELECT 1 FROM {TableName} WHERE name = :name", new { name = name });
+            });
+
+            return val.Count() > 0;
         }
         #endregion
 
