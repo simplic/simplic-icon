@@ -186,7 +186,6 @@ namespace Simplic.Icon.UI
         {
             iconsToDelete.Add(SelectedIcon.Id);
             Icons.Remove(SelectedIcon);
-            //SelectedIcon = Icons[0];
         } 
         #endregion
 
