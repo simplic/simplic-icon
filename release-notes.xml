@@ -13,5 +13,7 @@
   </ChangeSet>
   <ChangeSet>
     <Change type="bug">Icon Service now only saves icons to the data base, when the name does not already exists. Fixes "column 'name' not unique" errors.</Change>
+    <Change type="bug">Icon Service bug fixed that prevented icon deletion.</Change>
+    <Change type="bug">Fixed bug that prevented multiple icons from beeing deleted at once in Icon Editor Window.</Change>
   </ChangeSet>
 </ReleaseNotes>
