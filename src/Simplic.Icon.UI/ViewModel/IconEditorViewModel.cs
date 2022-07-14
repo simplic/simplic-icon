@@ -104,7 +104,7 @@ namespace Simplic.Icon.UI
             // delete icons
             foreach (var iconId in iconsToDelete)
             {
-                var success = iconService.Delete(iconId);
+                var success = DeleteIcon(iconId);
                 if (success == false)
                     return false;
             }
@@ -132,6 +132,17 @@ namespace Simplic.Icon.UI
             IsDirty = false;
 
             return true;
+        }
+        #endregion
+
+        #region [Delete Icon]
+        /// <summary>
+        /// Deletes Icon by Id.
+        /// </summary>
+        /// <returns>True if successful</returns>
+        public bool DeleteIcon(Guid iconId)
+        {
+            return iconService.Delete(iconId);
         }
         #endregion
 
@@ -173,8 +184,9 @@ namespace Simplic.Icon.UI
         /// <param name="param"></param>
         public void OnDeleteIconCommand(object param)
         {
+            iconsToDelete.Add(SelectedIcon.Id);
             Icons.Remove(SelectedIcon);
-            SelectedIcon = Icons[0];
+            //SelectedIcon = Icons[0];
         } 
         #endregion
 

@@ -1,5 +1,4 @@
 using Dapper;
-using Sap.Data.SQLAnywhere;
 using Simplic.Base;
 using Simplic.Cache;
 using Simplic.Sql;
@@ -10,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using Simplic.Configuration;
-using System.Security.AccessControl;
 
 namespace Simplic.Icon.Service
 {
@@ -488,7 +486,7 @@ namespace Simplic.Icon.Service
                 File.Delete(iconFilePath);
             return sqlService.OpenConnection((connection) =>
             {
-                var affectedRows = connection.Execute($"DELETE {TableName} WHERE Guid = :Guid", icon.Guid);
+                var affectedRows = connection.Execute($"DELETE {TableName} WHERE Guid = :Guid", new { Guid = icon.Guid });
 
                 return affectedRows > 0;
             });
@@ -566,7 +564,7 @@ namespace Simplic.Icon.Service
         {
             var val = sqlService.OpenConnection((connection) =>
             {
-                return connection.Query<List<int>>($"SELECT 1 FROM {TableName} WHERE name = :name", new { name = name });
+                return connection.Query<int>($"SELECT 1 FROM {TableName} WHERE name = :name", new { name = name });
             });
 
             return val.Count() > 0;

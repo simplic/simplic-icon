@@ -1,4 +1,5 @@
 ﻿using Simplic.Framework.UI;
+using System;
 using System.Windows.Data;
 using Telerik.Windows.Controls;
 
@@ -36,6 +37,20 @@ namespace Simplic.Icon.UI
             }
             else
                 return;
+        }
+
+        public override void OnDelete(WindowDeleteEventArg e)
+        {
+            if(SelectedIcon != null)
+            {
+                if(SelectedIcon.Id != Guid.Empty)
+                {
+                    (this.DataContext as IconEditorViewModel).DeleteIcon(SelectedIcon.Id);
+                    e.IsDeleted = true;
+                }
+            }
+
+            base.OnDelete(e);
         }
 
         private void AddRibbonUserControls()
