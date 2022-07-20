@@ -38,7 +38,10 @@ namespace Simplic.Icon.UI
             else
                 return;
         }
-
+        
+        /// <summary>
+        /// Deletes selected icon.
+        /// </summary>
         public override void OnDelete(WindowDeleteEventArg e)
         {
             if(SelectedIcon != null)
