@@ -23,7 +23,7 @@ namespace Simplic.Icon.UI
 
             InitializeComponent();
             this.DataContext = new IconEditorViewModel(searchText);
-            
+
             AddRibbonUserControls();
         }
 
@@ -38,19 +38,16 @@ namespace Simplic.Icon.UI
             else
                 return;
         }
-        
+
         /// <summary>
         /// Deletes selected icon.
         /// </summary>
         public override void OnDelete(WindowDeleteEventArg e)
         {
-            if(SelectedIcon != null)
+            if (SelectedIcon != null && SelectedIcon.Id != Guid.Empty)
             {
-                if(SelectedIcon.Id != Guid.Empty)
-                {
-                    (this.DataContext as IconEditorViewModel).DeleteIcon(SelectedIcon.Id);
-                    e.IsDeleted = true;
-                }
+                (this.DataContext as IconEditorViewModel).DeleteIcon(SelectedIcon.Id);
+                e.IsDeleted = true;
             }
 
             base.OnDelete(e);
@@ -62,14 +59,14 @@ namespace Simplic.Icon.UI
             {
                 Header = "New Icon"
             };
-            
+
             var btn = new RadRibbonButton
             {
-                CollapseToSmall = CollapseThreshold.WhenGroupIsMedium,                                
+                CollapseToSmall = CollapseThreshold.WhenGroupIsMedium,
                 LargeImage = iconService.GetByNameAsImage("action_add_16xLG"),
                 Size = Telerik.Windows.Controls.RibbonView.ButtonSize.Large,
                 Text = "Add new Icon"
-            };            
+            };
 
             btn.SetBinding(RadRibbonButton.CommandProperty, new Binding("AddNewIconCommand"));
             group.Items.Add(btn);
@@ -81,7 +78,7 @@ namespace Simplic.Icon.UI
         {
             get
             {
-                return (this.DataContext as IconEditorViewModel).SelectedIcon;                
+                return (this.DataContext as IconEditorViewModel).SelectedIcon;
             }
         }
 
