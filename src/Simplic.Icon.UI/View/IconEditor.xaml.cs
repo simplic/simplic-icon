@@ -1,4 +1,5 @@
 ﻿using Simplic.Framework.UI;
+using System;
 using System.Windows.Data;
 using Telerik.Windows.Controls;
 
@@ -22,7 +23,7 @@ namespace Simplic.Icon.UI
 
             InitializeComponent();
             this.DataContext = new IconEditorViewModel(searchText);
-            
+
             AddRibbonUserControls();
         }
 
@@ -38,20 +39,34 @@ namespace Simplic.Icon.UI
                 return;
         }
 
+        /// <summary>
+        /// Deletes selected icon.
+        /// </summary>
+        public override void OnDelete(WindowDeleteEventArg e)
+        {
+            if (SelectedIcon != null && SelectedIcon.Id != Guid.Empty)
+            {
+                (this.DataContext as IconEditorViewModel).DeleteIcon(SelectedIcon.Id);
+                e.IsDeleted = true;
+            }
+
+            base.OnDelete(e);
+        }
+
         private void AddRibbonUserControls()
         {
             var group = new RadRibbonGroup
             {
                 Header = "New Icon"
             };
-            
+
             var btn = new RadRibbonButton
             {
-                CollapseToSmall = CollapseThreshold.WhenGroupIsMedium,                                
+                CollapseToSmall = CollapseThreshold.WhenGroupIsMedium,
                 LargeImage = iconService.GetByNameAsImage("action_add_16xLG"),
                 Size = Telerik.Windows.Controls.RibbonView.ButtonSize.Large,
                 Text = "Add new Icon"
-            };            
+            };
 
             btn.SetBinding(RadRibbonButton.CommandProperty, new Binding("AddNewIconCommand"));
             group.Items.Add(btn);
@@ -63,7 +78,7 @@ namespace Simplic.Icon.UI
         {
             get
             {
-                return (this.DataContext as IconEditorViewModel).SelectedIcon;                
+                return (this.DataContext as IconEditorViewModel).SelectedIcon;
             }
         }
 
