@@ -6,7 +6,7 @@
              xmlns:simplic="clr-namespace:Simplic.Icon.UI"
              xmlns:base="clr-namespace:Simplic.Framework.UI;assembly=Simplic.Framework.Base"
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  LayoutContext="Win_IconEditor"      
-             mc:Ignorable="d" WindowStartupLocation="CenterOwner" AllowDelete="False" Width="1200" Height="700"
+             mc:Ignorable="d" WindowStartupLocation="CenterOwner" AllowDelete="True" Width="1200" Height="700"
              d:DesignHeight="300" d:DesignWidth="1000" Background="White" Title="Icon Editor">
     <Grid>
         <Grid.ColumnDefinitions>
