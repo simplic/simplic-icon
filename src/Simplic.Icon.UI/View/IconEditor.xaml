@@ -19,7 +19,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="0" Grid.Column="0" Header="Suche" Margin="10,0,10,0">
+        <GroupBox Grid.Row="0" Grid.Column="0" Header="Suche" Margin="10,0,10,0" Padding="5">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80" />
