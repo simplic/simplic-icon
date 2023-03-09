@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -19,6 +21,7 @@ namespace Simplic.Icon.UI
         #region Private Fields
         private string searchIconName;
         private IconViewModel selectedIcon;
+        private Visibility isSelectedIcon;
         private ObservableCollection<IconViewModel> icons;
         private IList<Guid> iconsToDelete;
         private CollectionViewSource filteredIcons;
@@ -30,8 +33,9 @@ namespace Simplic.Icon.UI
         public IconEditorViewModel(string searchText)
         {
             AddNewIconCommand = new RelayCommand(OnAddNewIconCommand);
+            Delete2IconCommand = new RelayCommand(OnDeleteIconCommand);
             DeleteIconCommand = new RelayCommand(OnDeleteIconCommand);
-            ExportIconCommand = new RelayCommand((e) => 
+            ExportIconCommand = new RelayCommand((e) =>
             {
                 var dialog = new Framework.SqlD.DCEF.ExportDialog();
                 dialog.Fill(selectedIcon.Id, 35);
@@ -50,6 +54,8 @@ namespace Simplic.Icon.UI
 
             SearchIconName = searchText;
             IsDirty = false;
+
+            isSelectedIcon = Visibility.Hidden;
         }
         #endregion
 
@@ -130,7 +136,6 @@ namespace Simplic.Icon.UI
             var totalChecksumHash = iconService.GenerateChecksum(Icons.Select(x => x.IconBlob).ToList());
             iconService.SaveChecksumToDb(totalChecksumHash);
             IsDirty = false;
-
             return true;
         }
         #endregion
@@ -174,6 +179,8 @@ namespace Simplic.Icon.UI
                     SelectedIcon = iconViewModel;
                 }
             }
+
+            // Select the new Icon
         }
         #endregion
 
@@ -186,7 +193,7 @@ namespace Simplic.Icon.UI
         {
             iconsToDelete.Add(SelectedIcon.Id);
             Icons.Remove(SelectedIcon);
-        } 
+        }
         #endregion
 
         #endregion
@@ -194,6 +201,9 @@ namespace Simplic.Icon.UI
         #region Public Properties
         public ICommand AddNewIconCommand { get; private set; }
         public ICommand DeleteIconCommand { get; private set; }
+        public ICommand Delete2IconCommand { get; private set; }
+
+        public ListView ListViewer { get; set; }
 
         public CollectionViewSource FilteredIcons
         {
@@ -210,7 +220,28 @@ namespace Simplic.Icon.UI
         public IconViewModel SelectedIcon
         {
             get { return selectedIcon; }
-            set { PropertySetter(value, (newValue) => { selectedIcon = newValue; }); }
+            set
+            {
+                PropertySetter(value, (newValue) => { selectedIcon = newValue; });
+                RaisePropertyChanged(nameof(IsSelectedIcon));
+            }
+        }
+
+        public Visibility IsSelectedIcon
+        {
+            get
+            {
+                if (selectedIcon != null)
+                {
+                    isSelectedIcon = Visibility.Visible;
+                }
+                else
+                {
+                    isSelectedIcon = Visibility.Hidden;
+                }
+                return isSelectedIcon;
+            }
+            set { PropertySetter(value, (newValue) => { isSelectedIcon = newValue; }); }
         }
 
         public string SearchIconName
