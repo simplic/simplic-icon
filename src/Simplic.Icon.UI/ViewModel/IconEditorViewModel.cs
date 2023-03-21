@@ -14,26 +14,26 @@ using System.Windows.Input;
 namespace Simplic.Icon.UI
 {
     /// <summary>
-    /// Interaction logic for Icon Editor
+    /// Interaction logic for Icon Editor.
     /// </summary>
     public class IconEditorViewModel : ExtendableViewModelBase
     {
-        #region Private Fields
         private string searchIconName;
         private IconViewModel selectedIcon;
-        private Visibility isSelectedIcon;
+        private Visibility visibleIfIconSelected;
         private ObservableCollection<IconViewModel> icons;
         private IList<Guid> iconsToDelete;
         private CollectionViewSource filteredIcons;
         private ICommand exportIconCommand;
         private IIconService iconService;
-        #endregion
 
-        #region Constructor
+        /// <summary>
+        /// The constructor for the class IconEditorViewModell.
+        /// </summary>
+        /// <param name="searchText"></param>
         public IconEditorViewModel(string searchText)
         {
             AddNewIconCommand = new RelayCommand(OnAddNewIconCommand);
-            Delete2IconCommand = new RelayCommand(OnDeleteIconCommand);
             DeleteIconCommand = new RelayCommand(OnDeleteIconCommand);
             ExportIconCommand = new RelayCommand((e) =>
             {
@@ -55,15 +55,11 @@ namespace Simplic.Icon.UI
             SearchIconName = searchText;
             IsDirty = false;
 
-            isSelectedIcon = Visibility.Hidden;
+            visibleIfIconSelected = Visibility.Hidden;
         }
-        #endregion
 
-        #region Private Methods
-
-        #region [LoadAllIcons]
         /// <summary>
-        /// Gets all icons from db
+        /// Gets all icons from db.
         /// </summary>
         private void LoadAllIcons()
         {
@@ -77,14 +73,12 @@ namespace Simplic.Icon.UI
                 }
             }
         }
-        #endregion
 
-        #region [FilteredIcons_Filter]
         /// <summary>
-        /// Filter event of the CollectionViewSource to filter out icons
+        /// Filter event of the CollectionViewSource to filter out icons.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">object.</param>
+        /// <param name="e">FilterEventArgs.</param>
         private void FilteredIcons_Filter(object sender, FilterEventArgs e)
         {
             var icon = e.Item as IconViewModel;
@@ -94,13 +88,7 @@ namespace Simplic.Icon.UI
                 e.Accepted = icon.Name.ToLower().Contains(SearchIconName.ToLower());
             }
         }
-        #endregion
 
-        #endregion
-
-        #region Public Methods
-
-        #region [Save]
         /// <summary>
         /// Saves changes to the db. 
         /// </summary>
@@ -138,9 +126,7 @@ namespace Simplic.Icon.UI
             IsDirty = false;
             return true;
         }
-        #endregion
 
-        #region [Delete Icon]
         /// <summary>
         /// Deletes Icon by Id.
         /// </summary>
@@ -149,13 +135,11 @@ namespace Simplic.Icon.UI
         {
             return iconService.Delete(iconId);
         }
-        #endregion
 
-        #region [OnAddNewIconCommand]
         /// <summary>
         /// Adds a new icon but does not save it to the db yet.
         /// </summary>
-        /// <param name="param"></param>
+        /// <param name="param">object.</param>
         public void OnAddNewIconCommand(object param)
         {
             var openFileDialog = new OpenFileDialog();
@@ -179,14 +163,10 @@ namespace Simplic.Icon.UI
                     SelectedIcon = iconViewModel;
                 }
             }
-
-            // Select the new Icon
         }
-        #endregion
 
-        #region [OnDeleteIconCommand]
         /// <summary>
-        /// Deletes an icon and puts it to the to be deleted icons list
+        /// Deletes an icon and puts it to the to be deleted icons list.
         /// </summary>
         /// <param name="param"></param>
         public void OnDeleteIconCommand(object param)
@@ -194,59 +174,75 @@ namespace Simplic.Icon.UI
             iconsToDelete.Add(SelectedIcon.Id);
             Icons.Remove(SelectedIcon);
         }
-        #endregion
 
-        #endregion
-
-        #region Public Properties
+        /// <summary>
+        /// Gets or sets the command for add new icon.
+        /// </summary>
         public ICommand AddNewIconCommand { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the comment for delete icon.
+        /// </summary>
         public ICommand DeleteIconCommand { get; private set; }
-        public ICommand Delete2IconCommand { get; private set; }
 
-        public ListView ListViewer { get; set; }
-
+        /// <summary>
+        /// Gets or sets the filtered icons.
+        /// </summary>
         public CollectionViewSource FilteredIcons
         {
-            get { return filteredIcons; }
+            get => filteredIcons;
             set { filteredIcons = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the observable collection of icons.
+        /// </summary>
         public ObservableCollection<IconViewModel> Icons
         {
-            get { return icons; }
+            get => icons;
             set { PropertySetter(value, (newValue) => { icons = newValue; }); }
         }
 
+        /// <summary>
+        /// Gets or sets the selected icon.
+        /// </summary>
         public IconViewModel SelectedIcon
         {
-            get { return selectedIcon; }
+            get => selectedIcon;
             set
             {
                 PropertySetter(value, (newValue) => { selectedIcon = newValue; });
-                RaisePropertyChanged(nameof(IsSelectedIcon));
+                RaisePropertyChanged(nameof(VisibleIfIconSelected));
             }
         }
 
-        public Visibility IsSelectedIcon
+        /// <summary>
+        /// Gets or sets the visibility depending on wheater an icon is selected or not.
+        /// </summary>
+        public Visibility VisibleIfIconSelected
         {
             get
             {
                 if (selectedIcon != null)
                 {
-                    isSelectedIcon = Visibility.Visible;
+                    visibleIfIconSelected = Visibility.Visible;
                 }
                 else
                 {
-                    isSelectedIcon = Visibility.Hidden;
+                    visibleIfIconSelected = Visibility.Hidden;
                 }
-                return isSelectedIcon;
+                return visibleIfIconSelected;
             }
-            set { PropertySetter(value, (newValue) => { isSelectedIcon = newValue; }); }
+
+            set { PropertySetter(value, (newValue) => { visibleIfIconSelected = newValue; }); }
         }
 
+        /// <summary>
+        /// Gets or sets the search icon name.
+        /// </summary>
         public string SearchIconName
         {
-            get { return searchIconName; }
+            get => searchIconName;
             set
             {
                 PropertySetter(value, (newValue) => { searchIconName = newValue; });
@@ -254,6 +250,9 @@ namespace Simplic.Icon.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the command for exporting the icon.
+        /// </summary>
         public ICommand ExportIconCommand
         {
             get
@@ -266,6 +265,5 @@ namespace Simplic.Icon.UI
                 exportIconCommand = value;
             }
         }
-        #endregion
     }
 }

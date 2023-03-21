@@ -1,8 +1,10 @@
 ﻿using Simplic.Framework.UI;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
 using Telerik.Windows.Controls;
+using System.Runtime.Remoting.Channels;
 
 namespace Simplic.Icon.UI
 {
@@ -13,11 +15,15 @@ namespace Simplic.Icon.UI
     {
         private IIconService iconService;
 
+        /// <summary>
+        /// The constructor of the class IconEditor.
+        /// </summary>
+        /// <param name="searchText">The given searched string.</param>
         public IconEditor(string searchText)
         {
             iconService = CommonServiceLocator.ServiceLocator.Current.GetInstance<IIconService>();
 
-            this.WindowMode = WindowMode.Edit;
+            this.WindowMode = WindowMode.View;
             this.AllowSave = true;
             this.AllowDrop = false;
             this.AllowPaging = false;
@@ -25,10 +31,13 @@ namespace Simplic.Icon.UI
             InitializeComponent();
             this.DataContext = new IconEditorViewModel(searchText);
 
-
             AddRibbonUserControls();
         }
 
+        /// <summary>
+        /// Saves all icons.
+        /// </summary>
+        /// <param name="e">WindowSaveEventArg.</param>
         public override void OnSave(WindowSaveEventArg e)
         {
             var result = (this.DataContext as IconEditorViewModel).Save();
@@ -47,21 +56,26 @@ namespace Simplic.Icon.UI
         {
             if (SelectedIcon != null && SelectedIcon.Id != Guid.Empty)
             {
-                (this.DataContext as IconEditorViewModel).DeleteIcon(SelectedIcon.Id);
+                (this.DataContext as IconEditorViewModel).OnDeleteIconCommand(SelectedIcon.Id);
                 e.IsDeleted = true;
             }
 
             base.OnDelete(e);
         }
 
+        /// <summary>
+        /// Adds RadRibbonButtons into the RadRibbonGroup.
+        /// </summary>
         private void AddRibbonUserControls()
         {
+            // Creats a new tab.
             var group = new RadRibbonGroup
             {
-                Header = "Icon Einstellung"
+                Header = "Icon"
             };
 
-            var btn = new RadRibbonButton
+            // Creats the Add button.
+            var addButton = new RadRibbonButton
             {
                 CollapseToSmall = CollapseThreshold.WhenGroupIsMedium,
                 LargeImage = iconService.GetByNameAsImage("action_add_16xLG"),
@@ -70,14 +84,15 @@ namespace Simplic.Icon.UI
                 Name = "addNewIcon"
             };
 
-            btn.SetBinding(RadRibbonButton.CommandProperty, new Binding("AddNewIconCommand"));
-            btn.Click += (sender, e) =>
+            addButton.SetBinding(RadRibbonButton.CommandProperty, new Binding("AddNewIconCommand"));
+            addButton.Click += (sender, e) =>
             {
                 scrollListViewer.ScrollIntoView(scrollListViewer.ItemContainerGenerator.Items[scrollListViewer.ItemContainerGenerator.Items.Count - 1]);
             };
-            group.Items.Add(btn);
+            group.Items.Add(addButton);
 
-            btn = new RadRibbonButton
+            // Creates the delete button.
+            var deleteButton = new RadRibbonButton
             {
                 CollapseToSmall = CollapseThreshold.WhenGroupIsMedium,
                 LargeImage = iconService.GetByNameAsImage("delete_32x"),
@@ -86,36 +101,41 @@ namespace Simplic.Icon.UI
                 IsHitTestVisible = false
             };
 
-            btn.SetBinding(RadRibbonButton.IsHitTestVisibleProperty, new Binding("IsSelectedIcon")
+            deleteButton.SetBinding(RadRibbonButton.CommandProperty, new Binding("DeleteIconCommand"));
+
+            deleteButton.SetBinding(RadRibbonButton.IsHitTestVisibleProperty, new Binding("VisibleIfIconSelected")
             {
                 Converter = new VisibilityToBooleanConverter()
             });
 
-            btn.SetBinding(RadRibbonButton.CommandProperty, new Binding("Delete2IconCommand"));
-            group.Items.Add(btn);
+            // Creates a trigger to grey out the button when no icon is selected.
+            Trigger opacityTrigger = new Trigger()
+            {
+                Property = RadRibbonButton.IsHitTestVisibleProperty,
+                Value = false
+            };
+            opacityTrigger.Setters.Add(new Setter(RadRibbonButton.OpacityProperty, 0.5));
+
+            Style deleteButtonStyle = new Style(typeof(RadRibbonButton));
+            deleteButtonStyle.Triggers.Add(opacityTrigger);
+
+            deleteButton.Style = deleteButtonStyle;
+
+            group.Items.Add(deleteButton);
 
             this.RadRibbonHomeTab.Items.Add(group);
         }
 
-        public IconViewModel SelectedIcon
-        {
-            get
-            {
-                return (this.DataContext as IconEditorViewModel).SelectedIcon;
-            }
-        }
+        /// <summary>
+        /// Gets the selected icon.
+        /// </summary>
+        public IconViewModel SelectedIcon => (this.DataContext as IconEditorViewModel).SelectedIcon;
 
         /// <summary>
-        /// Gets if an icon is selected.
+        /// Selects an icon.
         /// </summary>
-        public Visibility VisibleIconSelected
-        {
-            get
-            {
-                return (this.DataContext as IconEditorViewModel).IsSelectedIcon;
-            }
-        }
-
+        /// <param name="sender">object.</param>
+        /// <param name="e">MouseButtonEventArgs.</param>
         private void ListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (SelectedIcon != null)

@@ -7,12 +7,15 @@ using System.Windows.Media.Imaging;
 namespace Simplic.Icon.UI
 {
     /// <summary>
-    /// A markup extension to show simplic icons 
+    /// A markup extension to show simplic icons.
     /// </summary>
     public class IconExtension : System.Windows.Markup.MarkupExtension
     {
         private IIconService iconService;
 
+        /// <summary>
+        /// The constructor of the class IconExtension.
+        /// </summary>
         public IconExtension()
         {
             iconService = null;
@@ -24,12 +27,12 @@ namespace Simplic.Icon.UI
         }
 
         /// <summary>
-        /// Icon name to be searched in the db
+        /// Icon name to be searched in the db.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Returns a <see cref="BitmapImage"/> of a given icons name
+        /// Returns a <see cref="BitmapImage"/> of a given icons name.
         /// </summary>        
         /// <returns><see cref="BitmapImage"/></returns>
         public override object ProvideValue(IServiceProvider serviceProvider)

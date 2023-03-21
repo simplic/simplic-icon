@@ -6,7 +6,7 @@
              xmlns:simplic="clr-namespace:Simplic.Icon.UI"
              xmlns:base="clr-namespace:Simplic.Framework.UI;assembly=Simplic.Framework.Base"
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  LayoutContext="Win_IconEditor"      
-             mc:Ignorable="d" WindowStartupLocation="CenterOwner" AllowDelete="True" AllowPaging="False" Width="1200" Height="700"
+             mc:Ignorable="d" WindowStartupLocation="CenterOwner" AllowDelete="True" Width="1200" Height="700"
              d:DesignHeight="300" d:DesignWidth="1000" Background="White" Title="Icon Editor">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -58,9 +58,9 @@
         </GroupBox>
 
         <GroupBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Header="Icons" Margin="5">
-            <ListView x:Name="scrollListViewer" HorizontalAlignment="Left" MouseDoubleClick="ListView_MouseDoubleClick" VerticalAlignment="Stretch" ItemsSource="{Binding FilteredIcons.View}" SelectionMode="Single" SelectedItem="{Binding SelectedIcon, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0">
+            <ListView x:Name="scrollListViewer" HorizontalAlignment="Left" MouseDoubleClick="ListView_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Stretch" ItemsSource="{Binding FilteredIcons.View}" SelectionMode="Single" SelectedItem="{Binding SelectedIcon, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0">
                 <telerik:RadContextMenu.ContextMenu>
-                    <telerik:RadContextMenu>                     
+                    <telerik:RadContextMenu>
                         <telerik:RadMenuItem Header="Löschen" Command="{Binding DeleteIconCommand}">
                             <telerik:RadMenuItem.IconTemplate>
                                 <DataTemplate>
