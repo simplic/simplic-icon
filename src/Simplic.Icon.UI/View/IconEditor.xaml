@@ -19,28 +19,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="0" Grid.Column="0" Header="Ausgewähltes Icon" Margin="5,0,5,0" Padding="5">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="250" />
-                    <ColumnDefinition Width="60" />
-                    <ColumnDefinition Width="50" />
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="24"/>
-                </Grid.RowDefinitions>
-                                
-                <Label Grid.Column="0" Content="Icon Name: " />
-                <TextBox Grid.Column="1" Text="{Binding SelectedIcon.Name, UpdateSourceTrigger=PropertyChanged}" />
-                
-                <Label Grid.Column="2" Content="Größe:" />
-                <Label Grid.Column="3" HorizontalAlignment="Left" Content="{Binding SelectedIcon.IconSize, UpdateSourceTrigger=PropertyChanged}" />
-            </Grid>
-        </GroupBox>
-
-        <GroupBox Grid.Row="0" Grid.Column="1" Header="Suche" Margin="10,0,10,0">
+        <GroupBox Grid.Row="0" Grid.Column="0" Header="Suche" Margin="10,0,10,0" Padding="5">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80" />
@@ -57,10 +36,31 @@
 
         </GroupBox>
 
+        <GroupBox Grid.Row="0" Grid.Column="1" Header="Ausgewähltes Icon" Margin="5,0,5,0" Padding="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="24"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Content="Icon Name: " />
+                <TextBox Grid.Column="1" Text="{Binding SelectedIcon.Name, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsSelectedIcon}" />
+                
+                <Label Grid.Column="2" Content="Größe:" />
+                <Label Grid.Column="3" HorizontalAlignment="Left" Content="{Binding SelectedIcon.IconSize, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+        </GroupBox>
+
         <GroupBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Header="Icons" Margin="5">
-            <ListView HorizontalAlignment="Stretch" MouseDoubleClick="ListView_MouseDoubleClick" VerticalAlignment="Stretch" ItemsSource="{Binding FilteredIcons.View}" SelectionMode="Single" SelectedItem="{Binding SelectedIcon, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0">
+            <ListView x:Name="scrollListViewer" HorizontalAlignment="Left" MouseDoubleClick="ListView_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Stretch" ItemsSource="{Binding FilteredIcons.View}" SelectionMode="Single" SelectedItem="{Binding SelectedIcon, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0">
                 <telerik:RadContextMenu.ContextMenu>
-                    <telerik:RadContextMenu>                     
+                    <telerik:RadContextMenu>
                         <telerik:RadMenuItem Header="Löschen" Command="{Binding DeleteIconCommand}">
                             <telerik:RadMenuItem.IconTemplate>
                                 <DataTemplate>
@@ -80,7 +80,7 @@
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Left">
                             <Image SnapsToDevicePixels="True" Width="{Binding Width}" MaxHeight="100" MaxWidth="100" Source="{Binding IconBlobAsImage}" HorizontalAlignment="Left" VerticalAlignment="Top"  />
                             <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" />
                         </StackPanel>
